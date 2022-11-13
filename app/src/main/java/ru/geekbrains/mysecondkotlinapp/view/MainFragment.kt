@@ -8,23 +8,29 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
-import ru.geekbrains.mysecondkotlinapp.R
+import ru.geekbrains.mysecondkotlinapp.databinding.MainFragmentBinding
 import ru.geekbrains.mysecondkotlinapp.ui.viewmodel.AppState
 import ru.geekbrains.mysecondkotlinapp.ui.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
     private lateinit var viewModel: MainViewModel
+    private var _binding: MainFragmentBinding? = null
+
+    //Обратите внимание, что эта переменная существует только между методами onCreateView и onDestroyView. Можете объяснить почему?
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
+        _binding = MainFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,21 +51,23 @@ class MainFragment : Fragment() {
         when (appState) {
             is AppState.Success -> {
                 val weatherData = appState.weatherData
-                loadingLavyout.visibility = View.GONE
-                Snackbar.make(mainView, "Success", Snackbar.LENGTH_LONG).show()
+                binding.loadingLayout.visibility = View.GONE
+                Snackbar.make(binding.mainView, "Success", Snackbar.LENGTH_LONG).show()
             }
             is AppState.Loading -> {
-                loadingLayout.visibility = View.VISIBLE
+                binding.loadingLayout.visibility = View.VISIBLE
             }
             is AppState.Error -> {
-                loadingLayout.visibility = View.GONE
+                binding.loadingLayout.visibility = View.GONE
                 Snackbar
-                    .make(mainView, "Error", Snackbar.LENGTH_INDEFINITE)
+                    .make(binding.mainView, "Error", Snackbar.LENGTH_INDEFINITE)
                     .setAction("Reload") { viewModel.getWeather() }
                     .show()
             }
         }
+    }
 
-
+    companion object {
+        fun newInstance() = MainFragment()
     }
 }
