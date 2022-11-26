@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import ru.geekbrains.mysecondkotlinapp.R
 import ru.geekbrains.mysecondkotlinapp.databinding.MainActivityBinding
+import ru.geekbrains.mysecondkotlinapp.view.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
