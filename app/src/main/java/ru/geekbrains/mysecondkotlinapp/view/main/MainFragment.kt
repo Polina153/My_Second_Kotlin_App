@@ -108,10 +108,10 @@ class MainFragment : Fragment() {
                     )
                     .setAction(getString(R.string.reload)) { viewModel.getWeatherFromLocalSourceRus() }
                     .show()*/
-                   /* mainFragmentRootView.showSnackBar(//FIXME в методичке НЕТ binding! Но даже с ним ошибка
+                binding.mainFragmentRootView.showSnackBar(//FIXME в методичке НЕТ binding!
                     getString(R.string.error),
-                    getString(R.string.reload)
-                )*/ { viewModel.getWeatherFromLocalSourceRus() }
+                    getString(R.string.reload),
+                    { viewModel.getWeatherFromLocalSourceRus() })
             }
         }
     }
@@ -132,6 +132,10 @@ class MainFragment : Fragment() {
     override fun onDestroy() {
         adapter.removeListener()
         super.onDestroy()
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

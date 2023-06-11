@@ -48,7 +48,7 @@ class MainFragmentAdapter(private var onItemViewClickListener: MainFragment.OnIt
                     itemView.context,
                     weather.city.city,
                     Toast.LENGTH_LONG
-                ).show()*//*
+                ).show()
             }
         }*/
         fun bind(weather: Weather) {
