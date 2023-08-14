@@ -13,28 +13,13 @@ import ru.geekbrains.mysecondkotlinapp.databinding.FragmentMainBinding
 import ru.geekbrains.mysecondkotlinapp.model.Weather
 import ru.geekbrains.mysecondkotlinapp.ui.viewmodel.AppState
 import ru.geekbrains.mysecondkotlinapp.ui.viewmodel.MainViewModel
-import ru.geekbrains.mysecondkotlinapp.view.DetailsFragment
+import ru.geekbrains.mysecondkotlinapp.view.details.DetailsFragment
 
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    /* private lateinit var viewModel: MainViewModel
-     private var isDataSetRus: Boolean = true
-     private val adapter = MainFragmentAdapter(object:OnItemViewClickListener {
-         override fun onItemViewClick(weather: Weather) {
-             val manager = activity?.supportFragmentManager
-             if (manager != null) {
-                 val bundle = Bundle()
-                 bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, weather)
-                 manager.beginTransaction()
-                     .add(R.id.container, DetailsFragment.newInstance(bundle))
-                     .addToBackStack("")
-                     .commitAllowingStateLoss()
-             }
-         }
-     })*/
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
@@ -70,16 +55,6 @@ class MainFragment : Fragment() {
         viewModel.getWeatherFromLocalSourceRus()
     }
 
-    /*    private fun changeWeatherDataSet() {
-            if (isDataSetRus) {
-                viewModel.getWeatherFromLocalSourceWorld()
-                binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
-            } else {
-                viewModel.getWeatherFromLocalSourceRus()
-                binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
-            }
-            isDataSetRus = !isDataSetRus
-        }*/
     private fun changeWeatherDataSet() =
         if (isDataSetRus) {
             viewModel.getWeatherFromLocalSourceWorld()

@@ -1,13 +1,20 @@
 package ru.geekbrains.mysecondkotlinapp.view
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import ru.geekbrains.mysecondkotlinapp.R
 import ru.geekbrains.mysecondkotlinapp.databinding.MainActivityBinding
+import ru.geekbrains.mysecondkotlinapp.view.experiments.ThreadsFragment
 import ru.geekbrains.mysecondkotlinapp.view.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
 
+
+    private val receiver = MyBroadcastReceiver()//MainBroadcastReceiver()
     private lateinit var binding: MainActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,45 +27,31 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.container, MainFragment.newInstance())
                 .commitAllowingStateLoss()
         }
+        registerReceiver(receiver, IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED))
     }
 
-    /*var clickListener: View.OnClickListener = object : View.OnClickListener {
+    override fun onDestroy() {
+        unregisterReceiver(receiver)
+        super.onDestroy()
+    }
 
-        @RequiresApi(Build.VERSION_CODES.N)
-        override fun onClick(v: View?) {
-            try {
-                val uri = URL(binding.url.text.toString())
-                val handler = Handler() //Запоминаем основной поток
-                Thread {
-                    var urlConnection: HttpsURLConnection? = null
-                    try {
-                        urlConnection = uri.openConnection() as HttpsURLConnection
-                        urlConnection.requestMethod = "GET" //установка метода получения данных -- GET
-                        urlConnection.readTimeout = 10000 //установка таймаута -- 10 000 миллисекунд
-                        val reader =
-                            BufferedReader(InputStreamReader(urlConnection.inputStream)) //читаем данные в поток
-                        val result = getLines(reader)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_screen_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
-                        // Возвращаемся к основному потоку
-                        handler.post {
-                            binding.webview.loadData(result, "text/html; charset=utf-8", "utf-8")
-                        }
-                    } catch (e: Exception) {
-                        Log.e("", "Fail connection", e)
-                        e.printStackTrace()
-                    } finally {
-                        urlConnection?.disconnect()
-                    }
-                }.start()
-            } catch (e: MalformedURLException) {
-                Log.e("", "Fail URI", e)
-                e.printStackTrace()
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_threads -> {
+                supportFragmentManager.apply {
+                    beginTransaction()
+                        .add(R.id.container, ThreadsFragment.newInstance())
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+                true
             }
+            else -> super.onOptionsItemSelected(item)
         }
-
-        @RequiresApi(Build.VERSION_CODES.N)
-        private fun getLines(reader: BufferedReader): String {
-            return reader.lines().collect(Collectors.joining("\n"))
-        }
-    }*/
+    }
 }

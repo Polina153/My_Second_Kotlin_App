@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fragmentBackground"
+    android:clickable="true"
+    android:focusable="true"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,8 +48,9 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cityCoordinates"
-            tools:text="Облачно" />
+            app:layout_constraintTop_toBottomOf="@+id/temperatureValue"
+            tools:text="Облачно"
+            />
 
 
         <TextView
@@ -82,7 +85,7 @@
             android:text="@string/feels_like_label"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperatureValue"
+            app:layout_constraintTop_toBottomOf="@+id/weatherCondition"
             />
 
         <TextView
