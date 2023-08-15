@@ -18,6 +18,7 @@ import com.google.gson.Gson
 import okhttp3.*
 import ru.geekbrains.mysecondkotlinapp.R
 import ru.geekbrains.mysecondkotlinapp.databinding.FragmentDetailsBinding
+import ru.geekbrains.mysecondkotlinapp.databinding.FragmentThreadsBinding
 import ru.geekbrains.mysecondkotlinapp.model.FactDTO
 import ru.geekbrains.mysecondkotlinapp.model.Weather
 import ru.geekbrains.mysecondkotlinapp.model.WeatherDTO
@@ -58,7 +59,8 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_details, container, false)
+        _binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
