@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private val receiver = MyBroadcastReceiver()//MainBroadcastReceiver()
+    private val receiverConnection = InternetBroadcastReceiver()
     private lateinit var binding: MainActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,11 +30,12 @@ class MainActivity : AppCompatActivity() {
                 .commitAllowingStateLoss()
         }
         registerReceiver(receiver, IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED))
-        registerReceiver(receiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        registerReceiver(receiverConnection, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     override fun onDestroy() {
         unregisterReceiver(receiver)
+        unregisterReceiver(receiverConnection)
         super.onDestroy()
     }
 

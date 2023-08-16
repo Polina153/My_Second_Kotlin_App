@@ -4,6 +4,9 @@
     package="ru.geekbrains.mysecondkotlinapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"
+        tools:ignore="ManifestOrder" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MySecondKotlinApp">
+        <receiver
+            android:name=".view.InternetBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity
             android:name=".view.MainActivity"
             android:exported="true"
@@ -31,13 +39,17 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.LOCALE_CHANGED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".view.InternetBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
                 <action
                     android:name="android.net.conn.CONNECTIVITY_CHANGE"
                     tools:ignore="BatteryLife" />
             </intent-filter>
         </receiver>
-
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"
-        tools:ignore="ManifestOrder" />
+
 </manifest>
