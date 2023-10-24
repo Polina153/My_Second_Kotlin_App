@@ -1,30 +1,19 @@
 package ru.geekbrains.mysecondkotlinapp.view.details
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.Gson
 import okhttp3.*
 import ru.geekbrains.mysecondkotlinapp.R
 import ru.geekbrains.mysecondkotlinapp.databinding.FragmentDetailsBinding
-import ru.geekbrains.mysecondkotlinapp.databinding.FragmentThreadsBinding
-import ru.geekbrains.mysecondkotlinapp.model.FactDTO
 import ru.geekbrains.mysecondkotlinapp.model.Weather
 import ru.geekbrains.mysecondkotlinapp.model.WeatherDTO
-import java.io.BufferedReader
 import java.io.IOException
-import java.util.stream.Collectors
 
 private const val YOUR_API_KEY = "266af688-30ba-419b-8e29-46cb06ba895d"
 private const val MY_API_KEY = "8df85a2d-de57-4e99-be0f-4d7cb50a67ef"
@@ -75,7 +64,10 @@ class DetailsFragment : Fragment() {
 
         val client = OkHttpClient() // Клиент
         val builder: Request.Builder = Request.Builder() // Создаём строителя запроса
-        builder.header(REQUEST_API_KEY, MY_API_KEY) // Создаём заголовок запроса BuildConfig.WEATHER_API_KEY - было вторым аргументом! Я ИЗМЕНИЛА!
+        builder.header(
+            REQUEST_API_KEY,
+            MY_API_KEY
+        ) // Создаём заголовок запроса BuildConfig.WEATHER_API_KEY - было вторым аргументом! Я ИЗМЕНИЛА!
         builder.url(MAIN_LINK + "lat=${weatherBundle.city.lat}&lon=${weatherBundle.city.lon}") // Формируем URL
         val request: Request = builder.build() // Создаём запрос
         val call: Call = client.newCall(request) // Ставим запрос в очередь и отправляем
